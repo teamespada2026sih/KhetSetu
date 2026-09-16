@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { SpeakButton } from "@/voice/SpeakButton";
 
 export const ProductDetailsModal = () => {
   const {
@@ -24,6 +25,7 @@ export const ProductDetailsModal = () => {
     toggleSaveProduce,
     setIsOfferModalOpen,
     setOfferProductTarget,
+    language,
     t
   } = useApp();
 
@@ -35,6 +37,14 @@ export const ProductDetailsModal = () => {
     setOfferProductTarget(selectedProduct);
     setIsOfferModalOpen(true);
   };
+
+  // Localized read-aloud narration: farmer, location, price, quality
+  const speakText =
+    language === "hi"
+      ? `${selectedProduct.hindiName || selectedProduct.name}, किसान ${selectedProduct.farmer}, स्थान ${selectedProduct.district}, ${selectedProduct.state}। भाव ₹${selectedProduct.price} प्रति ${selectedProduct.unit || "किलोग्राम"}। गुणवत्ता ${selectedProduct.quality}।`
+      : language === "bn"
+      ? `${selectedProduct.bengaliName || selectedProduct.name}, কৃষক ${selectedProduct.farmer}, অবস্থান ${selectedProduct.district}, ${selectedProduct.state}। দাম ${selectedProduct.price} টাকা প্রতি ${selectedProduct.unit || "কেজি"}। গুণমান ${selectedProduct.quality}।`
+      : `${selectedProduct.name}. Farmer ${selectedProduct.farmer}. Location ${selectedProduct.district}, ${selectedProduct.state}. Price ${selectedProduct.price} rupees per ${selectedProduct.unit || "kilogram"}. Quality ${selectedProduct.quality}.`;
 
   return (
     <div
@@ -106,8 +116,20 @@ export const ProductDetailsModal = () => {
             {/* Right: Specifications & Pricing */}
             <div className="space-y-4">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground font-serif">
-                  {selectedProduct.name}
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground font-serif flex items-center gap-2">
+                  <span>{selectedProduct.name}</span>
+                  <SpeakButton
+                    text={speakText}
+                    testId="modal-speak-product-btn"
+                    label={
+                      language === "hi"
+                        ? "उत्पाद विवरण पढ़कर सुनाओ"
+                        : language === "bn"
+                        ? "পণ্যের বিবরণ পড়ে শোনাও"
+                        : "Read product details aloud"
+                    }
+                    className="h-8 w-8"
+                  />
                 </h2>
                 {selectedProduct.hindiName && (
                   <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium mt-0.5">
