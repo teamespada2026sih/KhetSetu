@@ -21,6 +21,7 @@ import { ProfileView } from "@/components/profile/ProfileView";
 import { SettingsView } from "@/components/settings/SettingsView";
 import { SupportView } from "@/components/support/SupportView";
 import { LoginView, SignupView } from "@/components/auth/AuthViews";
+import { Toaster } from "@/components/ui/sonner";
 
 const MainContent = () => {
   const { currentView } = useApp();
@@ -77,6 +78,7 @@ const MainContent = () => {
       <ProductDetailsModal />
       <MakeOfferModal />
       <NotificationDrawer />
+      <Toaster position="top-right" richColors closeButton />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useApp } from "@/context/AppContext";
 import {
   TrendingUp,
@@ -12,10 +12,30 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { SpeakButton } from "@/voice/SpeakButton";
 
 export const MarketPricesView = () => {
-  const { t, marketPrices, setCurrentView } = useApp();
+  const { t, marketPrices, setCurrentView, language, marketPricesFocus, setMarketPricesFocus } = useApp();
   const [search, setSearch] = useState("");
+  const cardRefs = useRef({});
+
+  // When a voice command focuses a specific commodity, scroll and pre-fill search
+  useEffect(() => {
+    if (marketPricesFocus) {
+      setSearch(marketPricesFocus);
+      const key = marketPricesFocus.toLowerCase();
+      // Wait a tick for the filtered card to mount
+      setTimeout(() => {
+        const el = cardRefs.current[key];
+        if (el && el.scrollIntoView) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 60);
+      // Auto-clear after ~4s so highlight fades on next voice call
+      const timer = setTimeout(() => setMarketPricesFocus(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [marketPricesFocus, setMarketPricesFocus]);
 
   const filteredPrices = marketPrices.filter((p) => {
     if (search.trim()) {
@@ -68,16 +88,34 @@ export const MarketPricesView = () => {
 
       {/* Prices Table / Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {filteredPrices.map((p, idx) => (
+        {filteredPrices.map((p, idx) => {
+          const focusKey = (marketPricesFocus || "").toLowerCase();
+          const isFocused = focusKey && p.commodity.toLowerCase() === focusKey;
+          const speakText =
+            language === "hi"
+              ? `${p.hindiName || p.commodity} का भाव ₹${p.currentPrice} प्रति किलोग्राम है। ${p.mandi} में। पिछले दिन का भाव ₹${p.prevPrice} था।`
+              : language === "bn"
+              ? `${p.bengaliName || p.commodity} এর দাম ${p.currentPrice} টাকা প্রতি কেজি, ${p.mandi} মণ্ডিতে। আগের দিনের দাম ছিল ${p.prevPrice} টাকা।`
+              : `${p.commodity} price is ${p.currentPrice} rupees per kilogram at ${p.mandi}. Previous day price was ${p.prevPrice} rupees.`;
+          return (
           <div
             key={idx}
+            ref={(el) => { cardRefs.current[p.commodity.toLowerCase()] = el; }}
             data-testid={`market-price-card-${p.commodity.toLowerCase()}`}
-            className="p-5 rounded-3xl bg-card border border-border shadow-xs hover:shadow-md transition-all text-left flex flex-col justify-between space-y-4"
+            className={`p-5 rounded-3xl bg-card border shadow-xs hover:shadow-md transition-all text-left flex flex-col justify-between space-y-4 ${
+              isFocused ? "border-emerald-500 ring-2 ring-emerald-500/40" : "border-border"
+            }`}
           >
             <div>
               <div className="flex items-baseline justify-between">
                 <div>
-                  <h3 className="font-bold text-lg text-foreground">{p.commodity}</h3>
+                  <h3 className="font-bold text-lg text-foreground flex items-center gap-1.5">
+                    {p.commodity}
+                    <SpeakButton
+                      text={speakText}
+                      testId={`speak-price-${p.commodity.toLowerCase()}`}
+                    />
+                  </h3>
                   <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
                     {p.hindiName} • {p.bengaliName}
                   </p>
@@ -130,7 +168,8 @@ export const MarketPricesView = () => {
               </Button>
             </div>
           </div>
-        ))}
+          );
+        })}
       </div>
 
     </div>

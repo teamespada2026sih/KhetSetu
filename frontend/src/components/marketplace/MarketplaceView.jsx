@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
 import { INDIAN_STATES_DISTRICTS } from "@/constants/mockData";
 import {
@@ -23,7 +23,9 @@ export const MarketplaceView = () => {
     toggleSaveProduce,
     setSelectedProduct,
     setIsOfferModalOpen,
-    setOfferProductTarget
+    setOfferProductTarget,
+    marketplaceVoiceSearch,
+    setMarketplaceVoiceSearch
   } = useApp();
 
   // Filters State
@@ -34,6 +36,14 @@ export const MarketplaceView = () => {
   const [selectedQuality, setSelectedQuality] = useState("All");
   const [maxPrice, setMaxPrice] = useState(150);
   const [sortBy, setSortBy] = useState("newest");
+
+  // Sync incoming voice search into the marketplace search bar and clear once consumed
+  useEffect(() => {
+    if (marketplaceVoiceSearch) {
+      setSearch(marketplaceVoiceSearch);
+      setMarketplaceVoiceSearch(null);
+    }
+  }, [marketplaceVoiceSearch, setMarketplaceVoiceSearch]);
 
   // Available districts based on selectedState
   const availableDistricts = useMemo(() => {

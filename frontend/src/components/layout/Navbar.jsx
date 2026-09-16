@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { VoiceMicButton } from "@/voice/VoiceMicButton";
 
 export const Navbar = () => {
   const {
@@ -198,6 +199,9 @@ export const Navbar = () => {
                 </div>
               )}
             </div>
+
+            {/* Voice Assistant Mic Button */}
+            <VoiceMicButton />
 
             {/* Theme Toggle Button */}
             <Button

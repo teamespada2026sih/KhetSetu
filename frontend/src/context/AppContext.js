@@ -118,6 +118,10 @@ export const AppProvider = ({ children }) => {
   const [offerProductTarget, setOfferProductTarget] = useState(null);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
+  // Voice integration bridge state
+  const [marketplaceVoiceSearch, setMarketplaceVoiceSearch] = useState(null);
+  const [marketPricesFocus, setMarketPricesFocus] = useState(null);
+
   // Apply Theme to documentElement
   useEffect(() => {
     try {
@@ -415,7 +419,11 @@ export const AppProvider = ({ children }) => {
         setIsNotificationOpen,
         updateProfile,
         resetDemoData,
-        marketPrices: DEMO_MARKET_PRICES
+        marketPrices: DEMO_MARKET_PRICES,
+        marketplaceVoiceSearch,
+        setMarketplaceVoiceSearch,
+        marketPricesFocus,
+        setMarketPricesFocus
       }}
     >
       {children}
