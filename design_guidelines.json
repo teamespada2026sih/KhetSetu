@@ -1,0 +1,89 @@
+{
+  "project_name": "KhetSetu (खेतसेतु / খেতসেতু)",
+  "app_type": "hybrid_fullstack",
+  "theme_support": {
+    "light_mode": true,
+    "dark_mode": true,
+    "default_mode": "light"
+  },
+  "languages_supported": [
+    "English",
+    "Hindi (हिन्दी)",
+    "Bengali (বাংলা)"
+  ],
+  "color_palette": {
+    "archetype": "ORGANIC & EARTHY",
+    "primary": "#16a34a",
+    "primary_dark": "#15803d",
+    "forest_green": "#14532d",
+    "mustard_accent": "#eab308",
+    "warm_cream": "#fefce8",
+    "stone_sand": "#f5f5f4",
+    "dark_bg": "#090d0a",
+    "card_bg_light": "#ffffff",
+    "card_bg_dark": "#111813",
+    "text_dark": "#1c1917",
+    "text_light": "#f4f4f5"
+  },
+  "typography": {
+    "headings": "Outfit, sans-serif",
+    "body": "Plus Jakarta Sans, sans-serif",
+    "mono": "JetBrains Mono, monospace",
+    "sizes": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tight font-extrabold",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl tracking-tight font-bold",
+      "h3": "text-xl sm:text-2xl font-semibold",
+      "body": "text-base leading-relaxed"
+    }
+  },
+  "visual_enhancers": {
+    "cursor_parallax": "Subtle translate3d cursor parallax effect on hero produce and cards",
+    "glassmorphism": "backdrop-blur-xl bg-white/80 dark:bg-black/75 border border-black/10 dark:border-white/10",
+    "shadows": "shadow-[0_8px_32px_rgba(22,163,74,0.12)]"
+  },
+  "auth_demo": {
+    "farmer": {
+      "email": "farmer@khetsetu.demo",
+      "role": "Farmer",
+      "name": "Rameshwar Singh (Punjab)",
+      "phone": "+91 98765 43210"
+    },
+    "buyer": {
+      "email": "buyer@khetsetu.demo",
+      "role": "Buyer",
+      "name": "Ananya Sharma (Delhi Mandi Corp)",
+      "phone": "+91 91234 56789"
+    }
+  },
+  "key_features": [
+    "Landing Page with hero cursor parallax, stats ticker, and quick portal links",
+    "Multi-lingual support (English, Hindi, Bengali) with instant state switcher",
+    "Complete Light/Dark mode toggle with persistent state",
+    "Local demo authentication with localStorage persistence & instant demo login buttons",
+    "Farmer Dashboard: stats, quick actions, recent activity, earnings chart",
+    "Buyer Dashboard: saved produce, active orders, escrow pipeline",
+    "Marketplace with 15 real agricultural crops, multi-filters (State, District, Quality Grade A/B/Organic, Price range), search, and sorting",
+    "Product Details Modal & Make Offer modal with price negotiation",
+    "Create Produce Listing Form with live preview",
+    "My Produce Management (Edit, Delete, Pause status)",
+    "Buyer Offers Table with Accept, Reject, Counter offer actions",
+    "Orders Pipeline & Consignments Table with Demo Escrow system",
+    "Market Prices Board (DEMO ₹/kg across key Indian mandis)",
+    "Market Intelligence interactive analytics and trends",
+    "User Profile with custom local image picker and initials avatar fallback",
+    "Support & FAQs, Settings, and Notification center with sonner toasts"
+  ],
+  "image_urls": [
+    {
+      "category": "Hero & Produce",
+      "url": "https://images.unsplash.com/photo-1769598249829-2268db744141?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "description": "Fresh Indian agricultural marketplace produce showcase"
+    },
+    {
+      "category": "Market Mandi",
+      "url": "https://images.unsplash.com/photo-1777113317549-9340e4b6d01e?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "description": "Harvest bags in fields / agricultural mandi market prices"
+    }
+  ],
+  "instructions_to_main_agent": "Build a robust Single Page React App (SPA) in /app/frontend with tab/route state and interactive modals matching all user requirements and design system specifications. Ensure all interactive elements have data-testid attributes and support English, Hindi, and Bengali."
+}
